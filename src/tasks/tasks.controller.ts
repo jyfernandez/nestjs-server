@@ -31,8 +31,8 @@ export class TasksController {
     return this.tasksService.getTasks(filterDTO, user);
   }
   @Get('/:id')
-  getTaskById(@Param('id') id: string): Promise<Task> {
-    return this.tasksService.getTaskById(id);
+  getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
+    return this.tasksService.getTaskById(id, user);
   }
   @Post()
   createTask(
@@ -49,8 +49,9 @@ export class TasksController {
   updateTask(
     @Param('id') id: string,
     @Body() updateTaskStatusDTO: UpdateTaskStatusDTO,
+    @GetUser() user: User,
   ): Promise<Task> {
     const { status } = updateTaskStatusDTO;
-    return this.tasksService.updateTask(id, status);
+    return this.tasksService.updateTask(id, status, user);
   }
 }
